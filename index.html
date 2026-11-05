@@ -164,19 +164,30 @@
       host.replaceChildren(); small.replaceChildren();
       const big = mountAvatar(host, { definition: v.value, color: "#4caf8f", eyeColor: "#2a332e", followPointer: true, label: "Sheep mascot" });
       mountAvatar(small, { definition: v.value, color: "#4caf8f", eyeColor: "#2a332e", followPointer: true, label: "" });
-      // Any interaction picks a random expression; the sheep settles back to idle a moment after the pointer leaves.
-      const moods = ["happy", "thinking"];
-      let current = "idle", timer = null;
+      // Any interaction picks a random expression. The engine has three moods; the rest come from combining a mood with a
+      // fixed look direction and a head tilt. The sheep settles back to idle a moment after the pointer leaves.
+      const rest = { mood: "idle", lookAt: null, view: { yaw: 0, pitch: 0 } };
+      const faces = [
+        { mood: "happy" },
+        { mood: "thinking" },
+        { mood: "happy", view: { yaw: -0.4, pitch: 0.08 } },
+        { mood: "happy", view: { yaw: 0.4, pitch: 0.08 } },
+        { mood: "idle", lookAt: { x: -1, y: -0.2 }, view: { yaw: -0.2, pitch: 0 } },
+        { mood: "thinking", lookAt: { x: 0.6, y: -1 }, view: { yaw: 0, pitch: -0.18 } },
+        { mood: "idle", lookAt: { x: 0, y: 1 }, view: { yaw: 0, pitch: 0.3 } },
+        { mood: "happy", lookAt: { x: 0, y: 0 }, view: { yaw: 0, pitch: -0.15 } },
+      ];
+      let last = -1, timer = null;
+      const settle = (ms) => { clearTimeout(timer); timer = setTimeout(() => { last = -1; big.update(rest); }, ms); };
       const pick = () => {
-        const next = moods[Math.floor(Math.random() * moods.length)];
-        current = next === current ? moods[(moods.indexOf(next) + 1) % moods.length] : next;
-        big.update({ mood: current });
-        clearTimeout(timer);
-        timer = setTimeout(() => { current = "idle"; big.update({ mood: "idle" }); }, 2600);
+        let i; do { i = Math.floor(Math.random() * faces.length); } while (i === last);
+        last = i;
+        big.update({ ...rest, ...faces[i] });
+        settle(2600);
       };
       host.addEventListener("pointerenter", pick);
       host.addEventListener("pointerdown", pick);
-      host.addEventListener("pointerleave", () => { clearTimeout(timer); timer = setTimeout(() => { current = "idle"; big.update({ mood: "idle" }); }, 900); });
+      host.addEventListener("pointerleave", () => settle(900));
     }
   } catch (e) { console.warn("avatar engine not loaded", e); }
 </script>
