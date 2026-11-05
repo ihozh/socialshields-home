@@ -54,10 +54,6 @@
   .stage { display: flex; flex-direction: column; align-items: center; gap: 14px; }
   .bot { width: min(100%, 340px); aspect-ratio: 1; cursor: pointer; }
   .bot svg, .bot canvas { width: 100%; height: 100%; display: block; }
-  .moods { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
-  .moods button { font: 600 12px var(--head); color: var(--muted); background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; cursor: pointer; transition: background .2s, color .2s; }
-  .moods button:hover { color: var(--fg); }
-  .moods button[aria-pressed="true"] { background: var(--green); color: #fff; border-color: var(--green); }
 
   /* Contact */
   .contact { border-top: 1px solid var(--line); padding-block: 48px 56px; }
@@ -133,11 +129,6 @@
       </div>
       <div class="stage">
         <div class="bot" id="bot" role="img" aria-label="Sheep mascot"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M34 44L66 44C74 44 78 52 78 62L78 68C78 80 66 88 50 88C34 88 22 80 22 68L22 62C22 52 26 44 34 44ZM18 44C12 38 16 28 24 30C24 20 36 16 40 22C42 12 56 12 58 22C64 14 76 18 74 28C84 26 88 38 80 42C84 48 76 54 72 48L28 48C24 54 14 50 18 44ZM24 50C14 48 8 56 10 64C12 70 20 70 26 64ZM76 50C86 48 92 56 90 64C88 70 80 70 74 64Z" fill="#4caf8f"/><rect x="39.8" y="54" width="4.4" height="12" rx="2.2" fill="#2a332e"/><rect x="55.8" y="54" width="4.4" height="12" rx="2.2" fill="#2a332e"/></svg></div>
-        <div class="moods" role="group" aria-label="Expression">
-          <button type="button" data-mood="idle" aria-pressed="true">Idle</button>
-          <button type="button" data-mood="happy" aria-pressed="false">Happy</button>
-          <button type="button" data-mood="thinking" aria-pressed="false">Thinking</button>
-        </div>
       </div>
     </div>
   </section>
@@ -173,16 +164,19 @@
       host.replaceChildren(); small.replaceChildren();
       const big = mountAvatar(host, { definition: v.value, color: "#4caf8f", eyeColor: "#2a332e", followPointer: true, label: "Sheep mascot" });
       mountAvatar(small, { definition: v.value, color: "#4caf8f", eyeColor: "#2a332e", followPointer: true, label: "" });
-      const chips = [...document.querySelectorAll(".moods button")];
-      let chosen = "idle", hovering = false;
-      const apply = () => {
-        big.update({ mood: hovering && chosen === "idle" ? "happy" : chosen });
-        chips.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mood === chosen)));
+      // Any interaction picks a random expression; the sheep settles back to idle a moment after the pointer leaves.
+      const moods = ["happy", "thinking"];
+      let current = "idle", timer = null;
+      const pick = () => {
+        const next = moods[Math.floor(Math.random() * moods.length)];
+        current = next === current ? moods[(moods.indexOf(next) + 1) % moods.length] : next;
+        big.update({ mood: current });
+        clearTimeout(timer);
+        timer = setTimeout(() => { current = "idle"; big.update({ mood: "idle" }); }, 2600);
       };
-      chips.forEach((b) => b.addEventListener("click", () => { chosen = b.dataset.mood; apply(); }));
-      host.addEventListener("mouseenter", () => { hovering = true; apply(); });
-      host.addEventListener("mouseleave", () => { hovering = false; apply(); });
-      host.addEventListener("click", () => { chosen = { idle: "happy", happy: "thinking", thinking: "idle" }[chosen]; apply(); });
+      host.addEventListener("pointerenter", pick);
+      host.addEventListener("pointerdown", pick);
+      host.addEventListener("pointerleave", () => { clearTimeout(timer); timer = setTimeout(() => { current = "idle"; big.update({ mood: "idle" }); }, 900); });
     }
   } catch (e) { console.warn("avatar engine not loaded", e); }
 </script>
