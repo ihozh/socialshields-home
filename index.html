@@ -35,6 +35,7 @@
   .groups { display: flex; flex-wrap: wrap; }
   .group { display: flex; flex-direction: column; padding: 0 6px; }
   .group + .group { border-left: 1px solid var(--line); }
+  .group-btn { display: none; }
   .group-label { font-family: var(--label); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; color: var(--gold-dark); padding-left: 8px; height: 0; opacity: 0; overflow: hidden; transition: height .3s cubic-bezier(.2,.8,.2,1), opacity .2s; }
   .bar:hover .group-label, .bar:focus-within .group-label { height: 18px; opacity: 1; }
   .bar ul { display: flex; gap: 2px; list-style: none; margin: 0; padding: 0; }
@@ -76,11 +77,22 @@
     .bot { width: min(100%, 240px); }
     .contact-in { grid-template-columns: 1fr; text-align: center; justify-items: center; }
     .links { justify-content: center; }
-    .bar { padding-left: 12px; }
+    .bar { padding: 8px 10px; gap: 6px; }
+    .bar .brand { height: 40px; margin-right: 0; }
     .bar .brand span { display: none; }
-    .bar li a { width: 48px; }
-    .bar li a img { width: 30px; height: 30px; }
-    .bar li a span { font-size: 10px; }
+    .groups { width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+    .group { display: contents; }
+    .group + .group { border-left: none; }
+    .group-label { display: none; }
+    .group-btn { order: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 4px; border: 1px solid transparent; border-radius: 14px; background: none; font: 600 12px var(--head); color: var(--muted); cursor: pointer; }
+    .group-btn img { width: 32px; height: 32px; }
+    .group-btn[aria-expanded="true"] { background: var(--bg-soft); color: var(--green-dark); border-color: var(--line); }
+    .group ul { order: 2; grid-column: 1 / -1; display: none; justify-content: center; flex-wrap: wrap; gap: 4px; padding-top: 6px; border-top: 1px solid var(--line); margin-top: 4px; }
+    .group.open ul { display: flex; }
+    .bar li a { width: 68px; }
+    .bar li a img { width: 32px; height: 32px; }
+    .bar li a span, .bar:hover li a span { height: 15px; opacity: 1; margin-top: 4px; font-size: 11px; }
+    .bar:hover, .bar:focus-within { padding-bottom: 8px; }
   }
   @media (prefers-reduced-motion: reduce) { .bar, .bar * { transition: none !important; } }
 </style>
@@ -92,6 +104,7 @@
     <a class="brand" href="https://socialshields.org/"><img src="https://icons.socialshields.org/api/icons/shield.svg?style=color&color=%232f7a4f&accent=%23e8c268&ink=%233b4a41&bg=%23ffffff&theme=light&size=96" width="30" height="30" alt=""><span>Social Shields</span></a>
     <nav aria-label="Projects" class="groups">
       <div class="group">
+        <button class="group-btn" type="button" aria-expanded="false"><img src="https://icons.socialshields.org/api/icons/lightbulb.svg?style=color&color=%232f7a4f&accent=%23e8c268&ink=%233b4a41&bg=%23ffffff&theme=light&size=96" width="36" height="36" alt=""><span>Research</span></button>
         <p class="group-label">Research</p>
         <ul>
           <li><a href="https://mhdash.socialshields.org/"><img src="https://icons.socialshields.org/api/icons/heart.svg?style=color&color=%232f7a4f&accent=%23e8c268&ink=%233b4a41&bg=%23ffffff&theme=light&size=96" width="36" height="36" alt=""><span>MHDash</span></a></li>
@@ -100,6 +113,7 @@
         </ul>
       </div>
       <div class="group">
+        <button class="group-btn" type="button" aria-expanded="false"><img src="https://icons.socialshields.org/api/icons/graduation-cap.svg?style=color&color=%232f7a4f&accent=%23e8c268&ink=%233b4a41&bg=%23ffffff&theme=light&size=96" width="36" height="36" alt=""><span>Teaching</span></button>
         <p class="group-label">Teaching</p>
         <ul>
           <li><a href="https://kb.socialshields.org/"><img src="https://icons.socialshields.org/api/icons/book-stack.svg?style=color&color=%232f7a4f&accent=%23e8c268&ink=%233b4a41&bg=%23ffffff&theme=light&size=96" width="36" height="36" alt=""><span>KB</span></a></li>
@@ -107,6 +121,7 @@
         </ul>
       </div>
       <div class="group">
+        <button class="group-btn" type="button" aria-expanded="false"><img src="https://icons.socialshields.org/api/icons/package.svg?style=color&color=%232f7a4f&accent=%23e8c268&ink=%233b4a41&bg=%23ffffff&theme=light&size=96" width="36" height="36" alt=""><span>Products</span></button>
         <p class="group-label">Products</p>
         <ul>
           <li><a href="https://hub.socialshields.org/"><img src="https://icons.socialshields.org/api/icons/megaphone.svg?style=color&color=%232f7a4f&accent=%23e8c268&ink=%233b4a41&bg=%23ffffff&theme=light&size=96" width="36" height="36" alt=""><span>News Hub</span></a></li>
@@ -149,6 +164,16 @@
 </main>
 <footer>Maintained by <b>Dr. Yihe Zhang</b>, Farmingdale State College</footer>
 
+<script>
+  // Phone layout: the three group buttons open one group at a time.
+  document.querySelectorAll(".group-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const group = btn.closest(".group"), open = !group.classList.contains("open");
+      document.querySelectorAll(".group").forEach((g) => { g.classList.remove("open"); g.querySelector(".group-btn").setAttribute("aria-expanded", "false"); });
+      group.classList.toggle("open", open); btn.setAttribute("aria-expanded", String(open));
+    });
+  });
+</script>
 <script type="module">
   // The ram is an open-bot-avatar definition (MIT, github.com/dominikscholz/open-bot-avatar): one silhouette path plus eye
   // positions; the engine adds the volume, gaze, blinking and moods. If the engine cannot load, the static SVG above stays.
