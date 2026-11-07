@@ -1,1 +1,26 @@
+# macOS / Windows
 .DS_Store
+._*
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Node (if a build step is ever added)
+node_modules/
+npm-debug.log*
+
+# Cloudflare Pages / Wrangler
+.wrangler/
+.dev.vars
+
+# Secrets and scratch
+.env
+.env.*
+*.log
+*.tmp

@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Social Shields</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Archivo+Narrow:wght@400;700&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap">
 <style>
   /* Layout: a floating rounded top bar with the project icons that expands on hover; a pale green hero with the ram avatar
      (open-bot-avatar engine, gold body, eyes follow the pointer); a contact block. Light theme only, by choice. */
@@ -12,25 +14,26 @@
     --green: #2f7a4f; --green-dark: #1f5c3a; --gold: #e8c268; --gold-dark: #b7891f;
     --bg: #fdfaf0; --hero-bg: #eaf4ed; --bg-soft: #eef4ef; --fg: #2a332e; --muted: #6f7d76; --line: #e6e1d1;
     --card: #ffffff; --shadow: 0 8px 28px rgba(60, 80, 60, .08);
-    --head: "Montserrat", "Gotham", "Helvetica Neue", Arial, sans-serif;
-    --label: "Archivo Narrow", "Roboto Condensed", Arial, sans-serif;
+    --head: "Fraunces", "Iowan Old Style", Georgia, serif;
+    --body: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+    --label: var(--body);
     color-scheme: light;
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--head); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
   a { color: inherit; text-decoration: none; }
   a:focus-visible, button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; border-radius: 10px; }
-  h1, h2 { margin: 0; font-weight: 800; letter-spacing: -0.015em; text-wrap: balance; }
+  h1, h2 { margin: 0; font-family: var(--head); font-weight: 700; letter-spacing: -0.02em; text-wrap: balance; font-variation-settings: "opsz" 144, "SOFT" 60; }
   p { margin: 0; }
   .wrap { max-width: 1040px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-  .label { font-family: var(--label); font-size: 14px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; }
+  .label { font-family: var(--label); font-size: 13px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; }
 
   /* Top bar */
   .bar-wrap { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; padding-top: 14px; pointer-events: none; }
   body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
   .bar { pointer-events: auto; display: flex; align-items: flex-start; gap: 8px 20px; flex-wrap: wrap; background: var(--card); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: 8px 10px 8px 16px; transition: padding .3s cubic-bezier(.2,.8,.2,1); }
   .bar:hover, .bar:focus-within { padding-bottom: 12px; }
-  .bar .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; margin-right: auto; height: 48px; color: var(--green-dark); }
+  .bar .brand { display: flex; align-items: center; gap: 10px; font-family: var(--head); font-weight: 700; font-size: 19px; letter-spacing: -0.01em; margin-right: auto; height: 48px; color: var(--green-dark); }
   .bar .brand img { width: 30px; height: 30px; }
   .groups { display: flex; flex-wrap: wrap; }
   .group { display: flex; flex-direction: column; padding: 0 6px; }
@@ -50,7 +53,7 @@
   .hero { background: var(--hero-bg); }
   .hero-in { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 32px; align-items: center; padding-block: 64px 56px; }
   .hero .label { color: var(--gold-dark); }
-  .hero h1 { font-size: clamp(38px, 5.6vw, 60px); line-height: 1.05; margin-top: 12px; color: var(--green-dark); }
+  .hero h1 { font-size: clamp(42px, 6.2vw, 68px); line-height: 1.02; margin-top: 12px; color: var(--green-dark); }
   .hero p.lede { margin-top: 18px; color: var(--muted); font-size: 17px; max-width: 48ch; font-weight: 500; }
   .stage { display: flex; flex-direction: column; align-items: center; gap: 14px; }
   .bot { width: min(100%, 340px); aspect-ratio: 1; cursor: pointer; }
@@ -60,15 +63,14 @@
   .contact { border-top: 1px solid var(--line); padding-block: 48px 56px; }
   .contact-in { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 28px; align-items: center; }
   .contact .bot { width: 104px; cursor: default; }
-  .contact h2 { font-size: 24px; color: var(--green-dark); }
+  .contact h2 { font-size: 28px; color: var(--green-dark); }
   .contact p { color: var(--muted); max-width: 56ch; margin-top: 8px; font-weight: 500; }
   .links { display: flex; gap: 10px 14px; flex-wrap: wrap; margin-top: 16px; }
-  .links a, .links code { display: inline-flex; align-items: center; padding: 9px 16px; border-radius: 999px; font: 700 14px var(--head); }
+  .links a, .links code { display: inline-flex; align-items: center; padding: 9px 16px; border-radius: 999px; font: 700 14px var(--body); }
   .links a { background: var(--green); color: #fff; transition: transform .2s; }
   .links a:hover { transform: translateY(-2px); }
   .links code { background: var(--bg-soft); border: 1px solid var(--line); user-select: all; font-weight: 600; }
-  footer { color: var(--muted); text-align: center; font-family: var(--label); font-size: 14px; letter-spacing: .04em; padding-block: 0 32px; }
-  footer b { color: var(--green); font-weight: 700; }
+  footer { color: var(--muted); text-align: center; font-family: var(--label); font-size: 13px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; padding-block: 0 32px; }
 
   @media (max-width: 820px) {
     .hero-in { grid-template-columns: 1fr; padding-block: 40px 36px; text-align: center; }
@@ -84,7 +86,7 @@
     .group { display: contents; }
     .group + .group { border-left: none; }
     .group-label { display: none; }
-    .group-btn { order: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 4px; border: 1px solid transparent; border-radius: 14px; background: none; font: 600 12px var(--head); color: var(--muted); cursor: pointer; }
+    .group-btn { order: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 4px; border: 1px solid transparent; border-radius: 14px; background: none; font: 600 12px var(--body); color: var(--muted); cursor: pointer; }
     .group-btn img { width: 32px; height: 32px; }
     .group-btn[aria-expanded="true"] { background: var(--bg-soft); color: var(--green-dark); border-color: var(--line); }
     .group ul { order: 2; grid-column: 1 / -1; display: none; justify-content: center; flex-wrap: wrap; gap: 4px; padding-top: 6px; border-top: 1px solid var(--line); margin-top: 4px; }
@@ -162,7 +164,7 @@
     </div>
   </section>
 </main>
-<footer>Maintained by <b>Dr. Yihe Zhang</b>, Farmingdale State College</footer>
+<footer>Farmingdale State College</footer>
 
 <script>
   // Phone layout: the three group buttons open one group at a time.

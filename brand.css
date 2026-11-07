@@ -1,0 +1,86 @@
+/* Social Shields shared brand stylesheet.
+   Served from https://socialshields.org/brand.css — link it from every *.socialshields.org site:
+     <link rel="stylesheet" href="https://socialshields.org/brand.css">
+   It sets the design tokens, loads the fonts, styles base elements and provides a few small components.
+   It does not set a layout; each site keeps its own. See STYLE_GUIDE.md for the rules behind it. */
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
+
+:root {
+  /* Brand colors */
+  --ss-green: #2f7a4f;
+  --ss-green-dark: #1f5c3a;
+  --ss-green-soft: #4caf8f;      /* mascot body */
+  --ss-gold: #e8c268;
+  --ss-gold-dark: #b7891f;
+
+  /* Surfaces and text (light theme only, by choice) */
+  --ss-bg: #fdfaf0;              /* page: warm cream */
+  --ss-hero-bg: #eaf4ed;         /* hero band: pale green */
+  --ss-bg-soft: #eef4ef;         /* hover fills, chips */
+  --ss-card: #ffffff;
+  --ss-fg: #2a332e;
+  --ss-muted: #6f7d76;
+  --ss-line: #e6e1d1;
+
+  /* Effects */
+  --ss-shadow: 0 8px 28px rgba(60, 80, 60, .08);
+  --ss-radius: 14px;             /* buttons, tiles */
+  --ss-radius-lg: 22px;          /* cards, bars */
+  --ss-ease: cubic-bezier(.2, .8, .2, 1);
+
+  /* Type */
+  --ss-head: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --ss-body: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+  --ss-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Layout */
+  --ss-measure: 1040px;
+  color-scheme: light;
+}
+
+/* Base elements */
+.ss, .ss body, body.ss {
+  margin: 0;
+  background: var(--ss-bg);
+  color: var(--ss-fg);
+  font-family: var(--ss-body);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+.ss h1, .ss h2, .ss h3 {
+  margin: 0;
+  font-family: var(--ss-head);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  font-variation-settings: "opsz" 144, "SOFT" 60;
+  color: var(--ss-green-dark);
+}
+.ss h1 { font-size: clamp(42px, 6.2vw, 68px); line-height: 1.02; }
+.ss h2 { font-size: 28px; line-height: 1.15; }
+.ss h3 { font-size: 20px; line-height: 1.25; }
+.ss p { margin: 0; }
+.ss a { color: inherit; text-decoration: none; }
+.ss a:focus-visible, .ss button:focus-visible { outline: 3px solid var(--ss-gold); outline-offset: 2px; border-radius: 10px; }
+.ss code, .ss pre { font-family: var(--ss-mono); font-size: .92em; }
+
+/* Small components */
+.ss-wrap { max-width: var(--ss-measure); margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); }
+.ss-label { font-family: var(--ss-body); font-size: 13px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; color: var(--ss-gold-dark); }
+.ss-lede { color: var(--ss-muted); font-size: 17px; font-weight: 500; max-width: 48ch; }
+.ss-card { background: var(--ss-card); border: 1px solid var(--ss-line); border-radius: var(--ss-radius-lg); box-shadow: var(--ss-shadow); }
+.ss-btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; border: 0; cursor: pointer; font: 700 14px var(--ss-body); background: var(--ss-green); color: #fff; transition: transform .2s var(--ss-ease); }
+.ss-btn:hover { transform: translateY(-2px); }
+.ss-btn--ghost { background: var(--ss-bg-soft); color: var(--ss-fg); border: 1px solid var(--ss-line); }
+.ss-chip { display: inline-flex; align-items: center; padding: 9px 16px; border-radius: 999px; background: var(--ss-bg-soft); border: 1px solid var(--ss-line); font: 600 14px var(--ss-body); }
+
+/* Home link: a small shield that takes the visitor back to socialshields.org. Put it at the top-left of every subsite. */
+.ss-home { display: inline-flex; align-items: center; gap: 10px; height: 48px; font-family: var(--ss-head); font-weight: 700; font-size: 19px; letter-spacing: -0.01em; color: var(--ss-green-dark); }
+.ss-home img { width: 30px; height: 30px; }
+
+/* Footer */
+.ss-footer { color: var(--ss-muted); text-align: center; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; padding-block: 24px 32px; }
+
+@media (prefers-reduced-motion: reduce) { .ss *, .ss-btn { transition: none !important; } }
