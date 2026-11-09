@@ -83,7 +83,7 @@ https://icons.socialshields.org/api/icons/<name>.svg?style=color&color=%232f7a4f
 Display at 30–36px in bars and 64–96px in feature tiles. Do not mix in other icon sets.
 
 Current assignments: shield (brand), lightbulb (Research, Lab), heart (MHDash), castle (SIEGE), chat-bubbles (Network),
-graduation-cap (Teaching), book-stack (KB), package (Products), megaphone (News Hub), weather (Weather), documents (News),
+graduation-cap (Teaching), book-stack (KB), terminal (Pyram), package (Products), megaphone (News Hub), weather (Weather), documents (News),
 paint-palette (Icons).
 
 ## 6. Mascot
