@@ -90,16 +90,20 @@ uppercase label directly above a heading.
 
 ## 5. Icons
 
-Every icon comes from the Icons API so all sites share one drawing style. Use the "color" style with the brand colors:
+Every icon comes from the Icons API so all sites share one drawing style. Use the "stroke" style: green lines with
+gold details, which sits well next to the thin headings.
 
 ```
-https://icons.socialshields.org/api/icons/<name>.svg?style=color&color=%23006456&accent=%23ffba00&ink=%231b1b1b&bg=%23ffffff&theme=light&size=96
+https://icons.socialshields.org/api/icons/<name>.svg?style=stroke&weight=1.4&color=%23006456&accent=%23ffba00&bg=%23fdfdfd&theme=light&size=96
 ```
+
+Set `bg` to the surface the icon sits on (`%23fdfdfd` for bars and cards, `%23f8f8f8` for the page); the stroke
+style paints hidden faces with it. Do not use the filled styles: they turn into dark blobs at bar size.
 
 Display at 30–36px in bars and 64–96px in feature tiles. Do not mix in other icon sets.
 
-Current assignments: shield (brand), lightbulb (Research, Lab), heart (MHDash), castle (SIEGE), chat-bubbles (Network),
-graduation-cap (Teaching), book-stack (KB), terminal (Pyram), package (Products), megaphone (News Hub), weather (Weather), documents (News),
+Current assignments: shield (brand), microscope (Research), lightbulb (Lab), heart (MHDash), castle (SIEGE), chat-bubbles (Network),
+graduation-cap (Education), book-stack (KB), terminal (Pyram), package (Products), megaphone (News Hub), weather (Weather), documents (News),
 paint-palette (Icons).
 
 ## 6. Mascot
