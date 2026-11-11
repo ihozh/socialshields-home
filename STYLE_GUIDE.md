@@ -12,63 +12,79 @@ stylesheet and use its tokens; the rules below explain the choices so a site can
 Any site that already has a design system (a framework theme, Tailwind config, etc.) can instead copy the token
 values into its own config.
 
+The look combines two sources. The neutral surfaces, the single bright gold and the type come from
+[impeccable.style](https://impeccable.style/). The green is Farmingdale State College's, from
+[farmingdale.edu](https://www.farmingdale.edu/).
+
 ## 1. Color
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `--ss-green` | `#2f7a4f` | Primary: buttons, links on hover, brand marks |
-| `--ss-green-dark` | `#1f5c3a` | Headings, brand name |
-| `--ss-green-soft` | `#4caf8f` | Mascot body, illustrations |
-| `--ss-gold` | `#e8c268` | Accent: focus rings, highlights, icon accents |
-| `--ss-gold-dark` | `#b7891f` | Small uppercase labels (eyebrows, group titles) |
-| `--ss-bg` | `#fdfaf0` | Page background (warm cream) |
-| `--ss-hero-bg` | `#eaf4ed` | Hero or header band (pale green) |
-| `--ss-bg-soft` | `#eef4ef` | Hover fills, chips, selected states |
-| `--ss-card` | `#ffffff` | Cards, floating bars |
-| `--ss-fg` | `#2a332e` | Body text |
-| `--ss-muted` | `#6f7d76` | Secondary text, footers |
-| `--ss-line` | `#e6e1d1` | Borders, dividers |
+| `--ss-green-dark` | `#006456` | Headings, brand name, buttons, footer band |
+| `--ss-green` | `#006f71` | Hover on green, focus rings |
+| `--ss-gold` | `#ffba00` | Mascot body, footer rule, text selection, icon accents |
+| `--ss-gold-dark` | `#856514` | Gold as text, in the rare case a gold word is needed |
+| `--ss-bg` | `#f8f8f8` | Page background |
+| `--ss-hero-bg` | `#eeeeee` | Hero or header band |
+| `--ss-bg-soft` | `#e4e4e4` | Hover fills, selected states |
+| `--ss-card` | `#fdfdfd` | Floating bars, chips |
+| `--ss-ink` | `#070707` | Strongest text: chip text, hovered links |
+| `--ss-fg` | `#1b1b1b` | Body text |
+| `--ss-muted` | `#585858` | Secondary text, labels |
+| `--ss-line` | `rgba(7, 7, 7, .1)` | Borders, dividers |
+
+`--ss-green-soft` is the old name for the mascot color. It now points to `--ss-gold` and stays only so existing
+sites do not break; use `--ss-gold` in new code.
 
 Rules:
 - Light theme only, by choice. Do not add a dark mode; set `color-scheme: light`.
-- Green carries, gold accents. Gold is never a large fill; it appears in labels, focus rings and icon details.
-- Text on `--ss-green` is white. Text on cream or pale green is `--ss-fg` or `--ss-green-dark`.
-- Data visualizations start from the greens and golds above, then add neutrals. Avoid red/blue defaults.
+- Surfaces are neutral gray, with no warm or green tint. Green carries the words that matter; gold is the one
+  bright spot.
+- Gold is never a text color on light surfaces (it fails contrast) and never a large fill apart from the mascot.
+- Text on green is white. Text meets WCAG AA (4.5:1) on every surface; do not lighten `--ss-muted`.
+- Data visualizations start from the green and gold above, then add neutrals. Avoid red/blue defaults.
 
 ## 2. Typography
 
-Two families, loaded from Google Fonts:
+Three families, loaded from Google Fonts:
 
-- **Fraunces** (variable, weights 600–700) for headings and the brand name. Set
-  `font-variation-settings: "opsz" 144, "SOFT" 60` and `letter-spacing: -0.02em`. Headings are `--ss-green-dark`.
-- **Plus Jakarta Sans** (500–800) for everything else: body, UI, buttons, labels.
+- **Alumni Sans** (variable, weights 200–500) for headings and the brand name. It is a condensed face set thin and
+  large: that contrast with the body text is the signature.
+- **Albert Sans** (400–700) for everything else: body, UI, buttons, labels.
+- **JetBrains Mono** (500) only for code and literal strings such as an email address.
 
-Fallbacks: `"Iowan Old Style", Georgia, serif` and `"Helvetica Neue", Arial, sans-serif`.
+Fallbacks: `"Albert Sans", Arial, sans-serif` for headings and
+`"Avenir Next", "Helvetica Neue", Arial, system-ui, sans-serif` for body.
 
 | Role | Font | Size | Weight | Notes |
 | --- | --- | --- | --- | --- |
-| H1 | Fraunces | `clamp(42px, 6.2vw, 68px)` | 700 | line-height 1.02 |
-| H2 | Fraunces | 28px | 700 | line-height 1.15 |
-| H3 | Fraunces | 20px | 700 | |
-| Body | Plus Jakarta Sans | 16px | 500 | line-height 1.55 |
-| Lede | Plus Jakarta Sans | 17px | 500 | color `--ss-muted`, max 48ch |
-| Label / eyebrow | Plus Jakarta Sans | 13px | 700 | uppercase, letter-spacing .16em, `--ss-gold-dark` |
-| Button | Plus Jakarta Sans | 14px | 700 | |
-| Footer | Plus Jakarta Sans | 13px | 700 | uppercase, letter-spacing .12em, `--ss-muted` |
+| H1 | Alumni Sans | `clamp(3.6rem, 7.4vw, 6rem)` | 200 | line-height 1, `--ss-green-dark` |
+| H2 | Alumni Sans | 2.6rem | 300 | line-height 1.04, `--ss-green-dark` |
+| H3 | Albert Sans | 18px | 600 | line-height 1.35, `--ss-ink` |
+| Brand name | Alumni Sans | 20px | 400 | uppercase, letter-spacing .18em |
+| Body | Albert Sans | 16px | 400 | line-height 1.65 |
+| Lede | Albert Sans | 18px | 400 | max 48ch |
+| Label | Albert Sans | 11px | 600 | uppercase, letter-spacing .14em, `--ss-muted` |
+| Button | Albert Sans | 14px | 600 | |
+| Code / address | JetBrains Mono | 13px | 500 | |
+| Footer | Albert Sans | 12px | 600 | uppercase, letter-spacing .14em, white on green |
 
-Serif headings over a sans body is the signature; do not swap them or add a third family.
+Do not set Alumni Sans below about 20px or heavier than 500; at small sizes use Albert Sans. Do not put a small
+uppercase label directly above a heading.
 
 ## 3. Shape, depth, motion
 
 - Radii: 14px for buttons and tiles (`--ss-radius`), 22px for cards and bars (`--ss-radius-lg`), 999px for pills.
-- One shadow: `0 8px 28px rgba(60, 80, 60, .08)` (`--ss-shadow`), only on white cards over cream.
+- One shadow, soft and neutral (`--ss-shadow`), only on floating bars and cards.
 - Borders are 1px `--ss-line`. No heavy outlines.
+- Focus ring: 2px `--ss-green`, offset 2px.
 - Easing: `cubic-bezier(.2, .8, .2, 1)` (`--ss-ease`), 200–300ms. Hover lifts by 2px. Respect `prefers-reduced-motion`.
 
 ## 4. Layout
 
 - Content width 1040px (`--ss-measure`), 16px side gutters, safe-area aware.
-- Page background is cream; a hero or header band may use pale green. Sections separate with a 1px `--ss-line` rule.
+- Page background is `--ss-bg`; a hero or header band may use `--ss-hero-bg`. Sections separate with a 1px
+  `--ss-line` rule.
 - Breakpoint 820px: stack grids to one column, center text.
 - Phone first: no horizontal scroll, 44px minimum tap targets.
 
@@ -77,7 +93,7 @@ Serif headings over a sans body is the signature; do not swap them or add a thir
 Every icon comes from the Icons API so all sites share one drawing style. Use the "color" style with the brand colors:
 
 ```
-https://icons.socialshields.org/api/icons/<name>.svg?style=color&color=%232f7a4f&accent=%23e8c268&ink=%233b4a41&bg=%23ffffff&theme=light&size=96
+https://icons.socialshields.org/api/icons/<name>.svg?style=color&color=%23006456&accent=%23ffba00&ink=%231b1b1b&bg=%23ffffff&theme=light&size=96
 ```
 
 Display at 30–36px in bars and 64–96px in feature tiles. Do not mix in other icon sets.
@@ -88,18 +104,19 @@ paint-palette (Icons).
 
 ## 6. Mascot
 
-The sheep is the shared mascot. It is an open-bot-avatar definition (MIT) with body color `--ss-green-soft` (#4caf8f)
-and eye color `--ss-fg`. Use the definition from `index.html` on socialshields.org. On subsites it is optional; when used,
-keep it small (about 100px) near the footer or a contact block, and keep the static SVG fallback.
+The sheep is the shared mascot. It is an open-bot-avatar definition (MIT) with body color `--ss-gold` (#ffba00)
+and eye color `--ss-fg` (#1b1b1b). Use the definition from `index.html` on socialshields.org. On subsites it is
+optional; when used, keep it small (about 100px) near the footer or a contact block, and keep the static SVG fallback.
 
 ## 7. Shared elements every subsite has
 
-1. **Home link** at the top-left: the shield icon plus "Social Shields" in Fraunces, linking to `https://socialshields.org/`.
-   Class `.ss-home` in `brand.css`.
-2. **Footer** reading only `Farmingdale State College` (class `.ss-footer`). No personal names in the footer.
+1. **Home link** at the top-left: the shield icon plus "Social Shields" in Alumni Sans capitals, linking to
+   `https://socialshields.org/`. Class `.ss-home` in `brand.css`.
+2. **Footer**: a green band with a gold rule on top, reading only `Farmingdale State College` (class `.ss-footer`).
+   No personal names in the footer.
 3. **Contact** address `contact@socialshields.org` where a contact is needed.
 4. `<title>` is `<Project> · Social Shields`.
 
 ## 8. Voice
 
-Short sentences. Plain words. Sentence case for headings. Labels and footers are the only uppercase text.
+Short sentences. Plain words. Sentence case for headings. The brand name, labels and footers are the only uppercase text.

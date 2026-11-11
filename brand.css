@@ -4,35 +4,36 @@
    It sets the design tokens, loads the fonts, styles base elements and provides a few small components.
    It does not set a layout; each site keeps its own. See STYLE_GUIDE.md for the rules behind it. */
 
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=Alumni+Sans:wght@200..500&family=JetBrains+Mono:wght@500&display=swap");
 
 :root {
-  /* Brand colors */
-  --ss-green: #2f7a4f;
-  --ss-green-dark: #1f5c3a;
-  --ss-green-soft: #4caf8f;      /* mascot body */
-  --ss-gold: #e8c268;
-  --ss-gold-dark: #b7891f;
+  /* Brand colors: Farmingdale State College green, one bright gold */
+  --ss-green: #006f71;           /* hover on green, focus rings */
+  --ss-green-dark: #006456;      /* headings, brand name, buttons, footer band */
+  --ss-gold: #ffba00;            /* mascot body, footer rule, text selection */
+  --ss-gold-dark: #856514;       /* gold as text, where a gold word is needed */
+  --ss-green-soft: var(--ss-gold); /* old name for the mascot color; kept so existing sites do not break */
 
-  /* Surfaces and text (light theme only, by choice) */
-  --ss-bg: #fdfaf0;              /* page: warm cream */
-  --ss-hero-bg: #eaf4ed;         /* hero band: pale green */
-  --ss-bg-soft: #eef4ef;         /* hover fills, chips */
-  --ss-card: #ffffff;
-  --ss-fg: #2a332e;
-  --ss-muted: #6f7d76;
-  --ss-line: #e6e1d1;
+  /* Surfaces and text: neutral, no tint (light theme only, by choice) */
+  --ss-bg: #f8f8f8;              /* page */
+  --ss-hero-bg: #eeeeee;         /* hero or header band */
+  --ss-bg-soft: #e4e4e4;         /* hover fills, selected states */
+  --ss-card: #fdfdfd;            /* floating bars, chips */
+  --ss-ink: #070707;             /* strongest text */
+  --ss-fg: #1b1b1b;              /* body text */
+  --ss-muted: #585858;           /* secondary text, labels */
+  --ss-line: rgba(7, 7, 7, .1);  /* borders, dividers */
 
   /* Effects */
-  --ss-shadow: 0 8px 28px rgba(60, 80, 60, .08);
+  --ss-shadow: 0 1px 1px rgba(7, 7, 7, .05), 0 2px 3px rgba(7, 7, 7, .04), 0 6px 12px rgba(7, 7, 7, .05);
   --ss-radius: 14px;             /* buttons, tiles */
   --ss-radius-lg: 22px;          /* cards, bars */
   --ss-ease: cubic-bezier(.2, .8, .2, 1);
 
   /* Type */
-  --ss-head: "Fraunces", "Iowan Old Style", Georgia, serif;
-  --ss-body: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
-  --ss-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --ss-head: "Alumni Sans", "Albert Sans", Arial, sans-serif;
+  --ss-body: "Albert Sans", "Avenir Next", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --ss-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   /* Layout */
   --ss-measure: 1040px;
@@ -46,41 +47,41 @@
   color: var(--ss-fg);
   font-family: var(--ss-body);
   font-size: 16px;
-  line-height: 1.55;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
-.ss h1, .ss h2, .ss h3 {
+.ss h1, .ss h2 {
   margin: 0;
   font-family: var(--ss-head);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-weight: 300;
   text-wrap: balance;
-  font-variation-settings: "opsz" 144, "SOFT" 60;
   color: var(--ss-green-dark);
 }
-.ss h1 { font-size: clamp(42px, 6.2vw, 68px); line-height: 1.02; }
-.ss h2 { font-size: 28px; line-height: 1.15; }
-.ss h3 { font-size: 20px; line-height: 1.25; }
-.ss p { margin: 0; }
+.ss h1 { font-size: clamp(3.6rem, 7.4vw, 6rem); font-weight: 200; line-height: 1; }
+.ss h2 { font-size: 2.6rem; line-height: 1.04; }
+.ss h3 { margin: 0; font: 600 18px/1.35 var(--ss-body); color: var(--ss-ink); }
+.ss p { margin: 0; text-wrap: pretty; }
 .ss a { color: inherit; text-decoration: none; }
-.ss a:focus-visible, .ss button:focus-visible { outline: 3px solid var(--ss-gold); outline-offset: 2px; border-radius: 10px; }
-.ss code, .ss pre { font-family: var(--ss-mono); font-size: .92em; }
+.ss a:focus-visible, .ss button:focus-visible { outline: 2px solid var(--ss-green); outline-offset: 2px; }
+.ss ::selection { background: var(--ss-gold); color: var(--ss-ink); }
+.ss code, .ss pre { font-family: var(--ss-mono); font-size: .8125em; font-weight: 500; }
 
 /* Small components */
 .ss-wrap { max-width: var(--ss-measure); margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); }
-.ss-label { font-family: var(--ss-body); font-size: 13px; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; color: var(--ss-gold-dark); }
-.ss-lede { color: var(--ss-muted); font-size: 17px; font-weight: 500; max-width: 48ch; }
+.ss-label { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--ss-muted); }
+.ss-lede { font-size: 18px; max-width: 48ch; }
 .ss-card { background: var(--ss-card); border: 1px solid var(--ss-line); border-radius: var(--ss-radius-lg); box-shadow: var(--ss-shadow); }
-.ss-btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; border: 0; cursor: pointer; font: 700 14px var(--ss-body); background: var(--ss-green); color: #fff; transition: transform .2s var(--ss-ease); }
-.ss-btn:hover { transform: translateY(-2px); }
-.ss-btn--ghost { background: var(--ss-bg-soft); color: var(--ss-fg); border: 1px solid var(--ss-line); }
-.ss-chip { display: inline-flex; align-items: center; padding: 9px 16px; border-radius: 999px; background: var(--ss-bg-soft); border: 1px solid var(--ss-line); font: 600 14px var(--ss-body); }
+.ss-btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 999px; border: 0; cursor: pointer; font: 600 14px var(--ss-body); background: var(--ss-green-dark); color: #fff; transition: transform .2s var(--ss-ease), background .2s; }
+.ss-btn:hover { transform: translateY(-2px); background: var(--ss-green); }
+.ss-btn:active { transform: none; }
+.ss-btn--ghost, .ss-btn--ghost:hover { background: var(--ss-card); color: var(--ss-ink); border: 1px solid var(--ss-line); }
+.ss-chip { display: inline-flex; align-items: center; padding: 11px 18px; border-radius: 999px; background: var(--ss-card); border: 1px solid var(--ss-line); color: var(--ss-ink); font: 500 13px var(--ss-mono); }
 
 /* Home link: a small shield that takes the visitor back to socialshields.org. Put it at the top-left of every subsite. */
-.ss-home { display: inline-flex; align-items: center; gap: 10px; height: 48px; font-family: var(--ss-head); font-weight: 700; font-size: 19px; letter-spacing: -0.01em; color: var(--ss-green-dark); }
+.ss-home { display: inline-flex; align-items: center; gap: 10px; height: 48px; font-family: var(--ss-head); font-weight: 400; font-size: 20px; letter-spacing: .18em; text-transform: uppercase; line-height: 1; color: var(--ss-green-dark); }
 .ss-home img { width: 30px; height: 30px; }
 
-/* Footer */
-.ss-footer { color: var(--ss-muted); text-align: center; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; padding-block: 24px 32px; }
+/* Footer: a band in FSC green with a gold rule on top */
+.ss-footer { background: var(--ss-green-dark); border-top: 4px solid var(--ss-gold); color: #fff; text-align: center; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; padding: 28px 16px calc(28px + env(safe-area-inset-bottom, 0px)); }
 
 @media (prefers-reduced-motion: reduce) { .ss *, .ss-btn { transition: none !important; } }
