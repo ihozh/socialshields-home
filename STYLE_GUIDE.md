@@ -12,9 +12,11 @@ stylesheet and use its tokens; the rules below explain the choices so a site can
 Any site that already has a design system (a framework theme, Tailwind config, etc.) can instead copy the token
 values into its own config.
 
-The look combines two sources. The neutral surfaces, the single bright gold and the type come from
+The look combines three sources. The neutral surfaces and the single bright gold follow
 [impeccable.style](https://impeccable.style/). The green is Farmingdale State College's, from
-[farmingdale.edu](https://www.farmingdale.edu/).
+[farmingdale.edu](https://www.farmingdale.edu/). The type roles follow [meedan.org](https://meedan.org/): a heavy
+grotesque for display, a sturdy serif for navigation, a plain sans for text. Meedan's own display and navigation
+faces are commercial, so the same roles are filled with open fonts.
 
 ## 1. Color
 
@@ -46,31 +48,32 @@ Rules:
 
 ## 2. Typography
 
-Three families, loaded from Google Fonts:
+Four families, loaded from Google Fonts:
 
-- **Alumni Sans** (variable, weights 200–500) for headings and the brand name. It is a condensed face set thin and
-  large: that contrast with the body text is the signature.
-- **Albert Sans** (400–700) for everything else: body, UI, buttons, labels.
-- **JetBrains Mono** (500) only for code and literal strings such as an email address.
+- **Bricolage Grotesque** (weights 700–800) for headings and the brand name. Heavy and tight; it is the loudest
+  thing on the page after the mascot.
+- **IBM Plex Serif** (500–600) for navigation and short emphasized lines: section names, H3.
+- **IBM Plex Sans** (400–600) for everything else: body, UI, buttons, labels.
+- **IBM Plex Mono** (500) only for code and literal strings such as an email address.
 
-Fallbacks: `"Albert Sans", Arial, sans-serif` for headings and
-`"Avenir Next", "Helvetica Neue", Arial, system-ui, sans-serif` for body.
+Tokens: `--ss-head`, `--ss-nav`, `--ss-body`, `--ss-mono`.
 
 | Role | Font | Size | Weight | Notes |
 | --- | --- | --- | --- | --- |
-| H1 | Alumni Sans | `clamp(3.6rem, 7.4vw, 6rem)` | 200 | line-height 1, `--ss-green-dark` |
-| H2 | Alumni Sans | 2.6rem | 300 | line-height 1.04, `--ss-green-dark` |
-| H3 | Albert Sans | 18px | 600 | line-height 1.35, `--ss-ink` |
-| Brand name | Alumni Sans | 20px | 400 | uppercase, letter-spacing .18em |
-| Body | Albert Sans | 16px | 400 | line-height 1.65 |
-| Lede | Albert Sans | 18px | 400 | max 48ch |
-| Label | Albert Sans | 11px | 600 | uppercase, letter-spacing .14em, `--ss-muted` |
-| Button | Albert Sans | 14px | 600 | |
-| Code / address | JetBrains Mono | 13px | 500 | |
-| Footer | Albert Sans | 12px | 600 | uppercase, letter-spacing .14em, white on green |
+| H1 | Bricolage Grotesque | `clamp(2.9rem, 6.4vw, 4.75rem)` | 800 | line-height 1, letter-spacing -0.02em, `--ss-green-dark` |
+| H2 | Bricolage Grotesque | 2rem | 800 | line-height 1.1, `--ss-green-dark` |
+| H3 | IBM Plex Serif | 19px | 600 | line-height 1.35, `--ss-ink` |
+| Brand name | Bricolage Grotesque | 24px | 800 | letter-spacing -0.02em, mixed case |
+| Navigation | IBM Plex Serif | 19px | 600 | section names in a bar |
+| Body | IBM Plex Sans | 16px | 400 | line-height 1.6 |
+| Lede | IBM Plex Sans | 18px | 400 | max 48ch |
+| Label | IBM Plex Sans | 11px | 600 | uppercase, letter-spacing .14em, `--ss-muted` |
+| Button | IBM Plex Sans | 14px | 600 | |
+| Code / address | IBM Plex Mono | 13px | 500 | |
+| Footer | IBM Plex Sans | 12px | 600 | uppercase, letter-spacing .14em, white on green |
 
-Do not set Alumni Sans below about 20px or heavier than 500; at small sizes use Albert Sans. Do not put a small
-uppercase label directly above a heading.
+Keep Bricolage Grotesque for headings and the brand name only; it is too heavy for running text. Do not put a
+small uppercase label directly above a heading.
 
 ## 3. Shape, depth, motion
 
@@ -112,9 +115,14 @@ The sheep is the shared mascot. It is an open-bot-avatar definition (MIT) with b
 and eye color `--ss-fg` (#1b1b1b). Use the definition from `index.html` on socialshields.org. On subsites it is
 optional; when used, keep it small (about 100px) near the footer or a contact block, and keep the static SVG fallback.
 
+On the homepage the sheep has a speech bubble with no heading: one sentence that opens with a greeting for the
+time of day and points to one Knowledge Base entry with a link. The entry changes every 8 seconds, pausing while the pointer or keyboard focus is on the bubble; a click on the sheep
+moves on at once. With `prefers-reduced-motion` there is no timer. The entries are a short
+list in `index.html`; add to it when the Knowledge Base grows.
+
 ## 7. Shared elements every subsite has
 
-1. **Home link** at the top-left: the shield icon plus "Social Shields" in Alumni Sans capitals, linking to
+1. **Home link** at the top-left: the shield icon plus "Social Shields" in Bricolage Grotesque, linking to
    `https://socialshields.org/`. Class `.ss-home` in `brand.css`.
 2. **Footer**: a green band with a gold rule on top, reading only `Farmingdale State College` (class `.ss-footer`).
    No personal names in the footer.
@@ -123,4 +131,4 @@ optional; when used, keep it small (about 100px) near the footer or a contact bl
 
 ## 8. Voice
 
-Short sentences. Plain words. Sentence case for headings. The brand name, labels and footers are the only uppercase text.
+Short sentences. Plain words. Sentence case for headings. Labels and footers are the only uppercase text.

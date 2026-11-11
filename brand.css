@@ -4,7 +4,7 @@
    It sets the design tokens, loads the fonts, styles base elements and provides a few small components.
    It does not set a layout; each site keeps its own. See STYLE_GUIDE.md for the rules behind it. */
 
-@import url("https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=Alumni+Sans:wght@200..500&family=JetBrains+Mono:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700..800&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap");
 
 :root {
   /* Brand colors: Farmingdale State College green, one bright gold */
@@ -31,9 +31,10 @@
   --ss-ease: cubic-bezier(.2, .8, .2, 1);
 
   /* Type */
-  --ss-head: "Alumni Sans", "Albert Sans", Arial, sans-serif;
-  --ss-body: "Albert Sans", "Avenir Next", "Helvetica Neue", Arial, system-ui, sans-serif;
-  --ss-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --ss-head: "Bricolage Grotesque", "Arial Black", "Helvetica Neue", Arial, sans-serif;   /* display */
+  --ss-nav: "IBM Plex Serif", Georgia, "Times New Roman", serif;                          /* navigation, short emphasis */
+  --ss-body: "IBM Plex Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --ss-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   /* Layout */
   --ss-measure: 1040px;
@@ -47,19 +48,20 @@
   color: var(--ss-fg);
   font-family: var(--ss-body);
   font-size: 16px;
-  line-height: 1.65;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 .ss h1, .ss h2 {
   margin: 0;
   font-family: var(--ss-head);
-  font-weight: 300;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   text-wrap: balance;
   color: var(--ss-green-dark);
 }
-.ss h1 { font-size: clamp(3.6rem, 7.4vw, 6rem); font-weight: 200; line-height: 1; }
-.ss h2 { font-size: 2.6rem; line-height: 1.04; }
-.ss h3 { margin: 0; font: 600 18px/1.35 var(--ss-body); color: var(--ss-ink); }
+.ss h1 { font-size: clamp(2.9rem, 6.4vw, 4.75rem); line-height: 1; }
+.ss h2 { font-size: 2rem; line-height: 1.1; }
+.ss h3 { margin: 0; font: 600 19px/1.35 var(--ss-nav); color: var(--ss-ink); }
 .ss p { margin: 0; text-wrap: pretty; }
 .ss a { color: inherit; text-decoration: none; }
 .ss a:focus-visible, .ss button:focus-visible { outline: 2px solid var(--ss-green); outline-offset: 2px; }
@@ -78,8 +80,8 @@
 .ss-chip { display: inline-flex; align-items: center; padding: 11px 18px; border-radius: 999px; background: var(--ss-card); border: 1px solid var(--ss-line); color: var(--ss-ink); font: 500 13px var(--ss-mono); }
 
 /* Home link: a small shield that takes the visitor back to socialshields.org. Put it at the top-left of every subsite. */
-.ss-home { display: inline-flex; align-items: center; gap: 10px; height: 48px; font-family: var(--ss-head); font-weight: 400; font-size: 20px; letter-spacing: .18em; text-transform: uppercase; line-height: 1; color: var(--ss-green-dark); }
-.ss-home img { width: 30px; height: 30px; }
+.ss-home, .ss a.ss-home { display: inline-flex; align-items: center; gap: 10px; height: 48px; font-family: var(--ss-head); font-weight: 800; font-size: 24px; letter-spacing: -0.02em; line-height: 1; color: var(--ss-green-dark); }
+.ss-home img { width: 32px; height: 32px; }
 
 /* Footer: a band in FSC green with a gold rule on top */
 .ss-footer { background: var(--ss-green-dark); border-top: 4px solid var(--ss-gold); color: #fff; text-align: center; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; padding: 28px 16px calc(28px + env(safe-area-inset-bottom, 0px)); }

@@ -9,28 +9,30 @@
 <link rel="icon" type="image/svg+xml" href="icons/shield.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=Alumni+Sans:wght@200..500&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700..800&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap">
 <style>
   /* Layout: a floating rounded top bar with the three sections that opens on hover; a hero with the sheep avatar
-     (open-bot-avatar engine, gold body, eyes follow the pointer); a contact block. Light theme only, by choice.
-     Two sources, combined. From impeccable.style: neutral paper surfaces, one bright gold accent, and the type
-     (Alumni Sans for display, Albert Sans for text, JetBrains Mono for the address). From farmingdale.edu: FSC green
-     for headings, the brand name, the button, the focus ring and the footer band. */
+     (open-bot-avatar engine, gold body, eyes follow the pointer) and its speech bubble; a contact block.
+     Light theme only, by choice. Color: neutral paper surfaces and one bright gold accent (after impeccable.style),
+     FSC green for headings, the brand name, buttons, the focus ring and the footer band (after farmingdale.edu).
+     Type follows the roles on meedan.org with open faces: a heavy grotesque for display (Bricolage Grotesque),
+     a sturdy serif for navigation (IBM Plex Serif), IBM Plex Sans for text, IBM Plex Mono for the address. */
   :root {
     --ink: oklch(13% 0 0); --green: #006456; --green-hover: #006f71; --accent: oklch(84% .19 80.46);
     --bg: oklch(97.8% 0 0); --hero-bg: oklch(95% 0 0); --bg-soft: oklch(92% 0 0); --fg: oklch(22% 0 0); --muted: oklch(46% 0 0); --line: oklch(13% 0 0 / .1);
     --card: oklch(99.5% 0 0); --shadow: 0 1px 1px oklch(13% 0 0 / .05), 0 2px 3px oklch(13% 0 0 / .04), 0 6px 12px oklch(13% 0 0 / .05); --ease: cubic-bezier(.2, .8, .2, 1);
-    --head: "Alumni Sans", "Albert Sans", Arial, sans-serif;
-    --body: "Albert Sans", "Avenir Next", "Helvetica Neue", Arial, system-ui, sans-serif;
-    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    --head: "Bricolage Grotesque", "Arial Black", "Helvetica Neue", Arial, sans-serif;
+    --nav: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+    --body: "IBM Plex Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
     color-scheme: light;
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
   a { color: inherit; text-decoration: none; }
   a:focus-visible, button:focus-visible { outline: 2px solid var(--green-hover); outline-offset: 2px; }
   ::selection { background: var(--accent); color: var(--ink); }
-  h1, h2 { margin: 0; font-family: var(--head); font-weight: 300; text-wrap: balance; color: var(--green); }
+  h1, h2 { margin: 0; font-family: var(--head); font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; color: var(--green); }
   p { margin: 0; text-wrap: pretty; }
   .wrap { max-width: 1040px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 
@@ -38,38 +40,47 @@
   .bar-wrap { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; padding-top: 14px; height: 80px; pointer-events: none; }
   body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
   .bar { pointer-events: auto; display: flex; align-items: flex-start; gap: 8px 20px; flex-wrap: wrap; background: var(--card); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: 8px 10px 8px 16px; transition: padding .3s var(--ease); }
-  .bar .brand { display: flex; align-items: center; gap: 10px; font-family: var(--head); font-weight: 400; font-size: 20px; letter-spacing: .18em; text-transform: uppercase; line-height: 1; margin-right: auto; height: 48px; color: var(--green); }
-  .bar .brand img { width: 30px; height: 30px; }
-  /* At rest the bar shows only the three section names. Hover or keyboard focus opens the projects under each one. */
+  .bar .brand { display: flex; align-items: center; gap: 10px; font-family: var(--head); font-weight: 800; font-size: 24px; letter-spacing: -0.02em; line-height: 1; margin-right: auto; height: 48px; color: var(--green); }
+  .bar .brand img { width: 32px; height: 32px; }
+  /* At rest the bar shows only the three section names. Hover or keyboard focus opens the projects under each one,
+     three to a row; a fourth project wraps to a second row. */
   .groups { display: flex; flex-wrap: wrap; }
   .group { display: flex; flex-direction: column; align-items: flex-start; padding: 0 6px; }
   .group + .group { border-left: 1px solid var(--line); }
-  .group-btn { display: flex; align-items: center; gap: 8px; height: 48px; padding: 0 12px 0 8px; border: 1px solid transparent; border-radius: 14px; background: none; font: 500 15px var(--body); color: var(--fg); cursor: default; }
-  .group-btn img { width: 30px; height: 30px; }
-  .bar ul { display: flex; gap: 2px; list-style: none; margin: 0; padding: 0; height: 0; opacity: 0; visibility: hidden; overflow: hidden; transition: height .3s var(--ease), opacity .2s, visibility 0s .3s; }
+  .group-btn { display: flex; align-items: center; gap: 8px; height: 48px; padding: 0 12px 0 8px; border: 1px solid transparent; border-radius: 14px; background: none; font: 600 19px var(--nav); color: var(--fg); cursor: default; }
+  .group-btn img { width: 32px; height: 32px; }
+  .bar ul { display: grid; grid-template-columns: repeat(3, 76px); gap: 2px; list-style: none; margin: 0; padding: 0; max-height: 0; opacity: 0; visibility: hidden; overflow: hidden; transition: max-height .3s var(--ease), opacity .2s, visibility 0s .3s; }
   .bar:hover, .bar:focus-within { padding-bottom: 12px; }
-  .bar:hover ul, .bar:focus-within ul { height: 68px; opacity: 1; visibility: visible; transition-delay: 0s; }
-  .bar li a { display: flex; flex-direction: column; align-items: center; width: 64px; padding: 6px 4px; border-radius: 14px; color: var(--muted); transition: background .2s, color .2s; }
+  .bar:hover ul, .bar:focus-within ul { max-height: 160px; opacity: 1; visibility: visible; transition-delay: 0s; }
+  .bar li a { display: flex; flex-direction: column; align-items: center; padding: 6px 2px; border-radius: 14px; color: var(--muted); transition: background .2s, color .2s; }
   .bar li a img { width: 36px; height: 36px; transition: transform .25s cubic-bezier(.34,1.56,.64,1); }
-  .bar li a span { font-size: 11.5px; font-weight: 500; text-align: center; line-height: 1.2; height: 15px; margin-top: 4px; overflow: hidden; }
+  .bar li a span { font-size: 15px; font-weight: 500; text-align: center; line-height: 1.2; margin-top: 4px; white-space: nowrap; }
   .bar li a:hover { background: var(--bg-soft); color: var(--ink); }
   .bar li a:hover img { transform: translateY(-2px) scale(1.08); }
 
   /* Hero */
   .hero { background: var(--hero-bg); }
   .hero-in { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 32px; align-items: center; padding-block: 64px 56px; }
-  .hero h1 { font-size: clamp(3.6rem, 7.4vw, 6rem); font-weight: 200; line-height: 1; }
+  .hero h1 { font-size: clamp(2.9rem, 6.4vw, 4.75rem); line-height: 1; }
   .hero p.lede { margin-top: 18px; font-size: 18px; max-width: 48ch; }
-  .hero p.affil { margin-top: 20px; color: var(--green); font-size: 15px; font-weight: 600; }
-  .stage { display: flex; justify-content: center; }
-  .bot { width: min(100%, 340px); aspect-ratio: 1; cursor: pointer; }
+  .hero p.affil { margin-top: 20px; color: var(--green); font: 600 16px var(--nav); }
+  .stage { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .bot { width: min(100%, 300px); aspect-ratio: 1; cursor: pointer; }
+  /* The sheep's speech bubble: a greeting and one Knowledge Base entry to read. */
+  .say { position: relative; width: min(100%, 340px); background: var(--card); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); padding: 16px 18px; text-align: left; }
+  .say::after { content: ""; position: absolute; left: 50%; bottom: -8px; width: 14px; height: 14px; margin-left: -7px; background: var(--card); border: solid var(--line); border-width: 0 1px 1px 0; transform: rotate(45deg); }
+  .say-tip { min-height: 4.5em; font-size: 15px; line-height: 1.5; color: var(--fg); }   /* room for three lines, so the sheep does not jump when the entry changes */
+  .say-tip a { color: var(--green); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .say-tip a:hover { color: var(--green-hover); text-decoration-thickness: 2px; }
+  .say.swap .say-tip { animation: say-in .35s var(--ease); }
+  @keyframes say-in { from { opacity: 0; transform: translateY(4px); } }
   .bot svg, .bot canvas { width: 100%; height: 100%; display: block; }
 
   /* Contact */
   .contact { border-top: 1px solid var(--line); padding-block: 48px 56px; }
   .contact-in { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 28px; align-items: center; }
   .contact .bot { width: 104px; cursor: default; }
-  .contact h2 { font-size: 2.6rem; line-height: 1.04; }
+  .contact h2 { font-size: 2rem; line-height: 1.1; }
   .contact p { color: var(--muted); max-width: 56ch; margin-top: 8px; }
   .links { display: flex; gap: 10px 14px; flex-wrap: wrap; margin-top: 16px; }
   .links a, .links code { display: inline-flex; align-items: center; padding: 11px 18px; border-radius: 999px; font: 600 14px var(--body); }
@@ -85,14 +96,15 @@
   @media (hover: none) {
     .group-btn { cursor: pointer; }
     .bar:has(.group.open) { padding-bottom: 12px; }
-    .bar:has(.group.open) ul { height: 68px; opacity: 1; visibility: visible; transition-delay: 0s; }
+    .bar:has(.group.open) ul { max-height: 160px; opacity: 1; visibility: visible; transition-delay: 0s; }
   }
   @media (max-width: 820px) {
     .bar-wrap { height: auto; }
     .hero-in { grid-template-columns: 1fr; padding-block: 40px 36px; text-align: center; }
     .hero p.lede { margin-inline: auto; }
     .stage { order: -1; }
-    .bot { width: min(100%, 240px); }
+    .bot { width: min(100%, 220px); }
+    .say { text-align: center; }
     .contact-in { grid-template-columns: 1fr; text-align: center; justify-items: center; }
     .links { justify-content: center; }
     .bar { padding: 8px 10px; gap: 6px; }
@@ -101,18 +113,17 @@
     .groups { width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
     .group { display: contents; }
     .group + .group { border-left: none; }
-    .group-btn { order: 1; flex-direction: column; justify-content: center; gap: 3px; height: auto; padding: 6px 4px; font-size: 12px; color: var(--muted); cursor: pointer; }
+    .group-btn { order: 1; flex-direction: column; justify-content: center; gap: 3px; height: auto; padding: 6px 4px; font-size: 15px; color: var(--muted); cursor: pointer; }
     .group-btn img { width: 32px; height: 32px; }
     .group-btn[aria-expanded="true"] { background: var(--bg-soft); color: var(--green); border-color: var(--line); }
-    .bar .group ul, .bar:hover .group ul, .bar:focus-within .group ul, .bar:has(.group.open) .group ul { order: 2; grid-column: 1 / -1; justify-content: center; flex-wrap: wrap; gap: 4px; height: auto; opacity: 1; visibility: visible; padding-top: 6px; border-top: 1px solid var(--line); margin-top: 4px; }
+    .bar .group ul, .bar:hover .group ul, .bar:focus-within .group ul, .bar:has(.group.open) .group ul { order: 2; grid-column: 1 / -1; grid-template-columns: repeat(3, 92px); justify-content: center; gap: 4px; max-height: none; opacity: 1; visibility: visible; padding-top: 6px; border-top: 1px solid var(--line); margin-top: 4px; }
     .bar .group ul { display: none; }
-    .bar .group.open ul { display: flex; }
-    .bar li a { width: 68px; }
+    .bar .group.open ul { display: grid; }
     .bar li a img { width: 32px; height: 32px; }
-    .bar li a span { font-size: 11px; }
+    .bar li a span { font-size: 14px; }
     .bar:hover, .bar:focus-within, .bar:has(.group.open) { padding-bottom: 8px; }
   }
-  @media (prefers-reduced-motion: reduce) { .bar, .bar *, .links a { transition: none !important; } }
+  @media (prefers-reduced-motion: reduce) { .bar, .bar *, .links a { transition: none !important; } .say.swap .say-tip { animation: none; } }
 </style>
 </head>
 <body>
@@ -159,6 +170,9 @@
         <p class="affil">Farmingdale State College</p>
       </div>
       <div class="stage">
+        <div class="say" id="say">
+          <p class="say-tip" id="say-tip"><span id="say-hi">Hi there!</span> New here? Start with <a href="https://kb.socialshields.org/310/map/#node/cia-triad">C.I.A. Triad</a>, the three goals every security decision protects.</p>
+        </div>
         <div class="bot" id="bot" role="img" aria-label="Sheep mascot"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g id="ram"><path d="M34 44L66 44C74 44 78 52 78 62L78 68C78 80 66 88 50 88C34 88 22 80 22 68L22 62C22 52 26 44 34 44ZM18 44C12 38 16 28 24 30C24 20 36 16 40 22C42 12 56 12 58 22C64 14 76 18 74 28C84 26 88 38 80 42C84 48 76 54 72 48L28 48C24 54 14 50 18 44ZM24 50C14 48 8 56 10 64C12 70 20 70 26 64ZM76 50C86 48 92 56 90 64C88 70 80 70 74 64Z" fill="#ffba00"/><rect x="39.8" y="54" width="4.4" height="12" rx="2.2" fill="#1b1b1b"/><rect x="55.8" y="54" width="4.4" height="12" rx="2.2" fill="#1b1b1b"/></g></svg></div>
       </div>
     </div>
@@ -189,6 +203,53 @@
       group.classList.toggle("open", open); btn.setAttribute("aria-expanded", String(open));
     });
   });
+</script>
+<script>
+  // The sheep greets the visitor by time of day and, in the same bubble, suggests one Knowledge Base entry
+  // (kb.socialshields.org). The entry changes every few seconds; the timer waits while the pointer or keyboard focus is
+  // on the bubble, so a link can be read and followed, and while the tab is hidden. Visitors who ask for reduced motion
+  // get no timer.
+  // A click on the sheep moves to the next entry at once.
+  const KB = "https://kb.socialshields.org";
+  const entries = [
+    ["C.I.A. Triad", "/310/map/#node/cia-triad", "the three goals every security decision protects"],
+    ["Two's Complement", "/articles/twos-complement.html", "how a computer with no minus sign stores negative numbers"],
+    ["Malware", "/310/map/#node/malware-types", "the main kinds of malicious software and how they differ"],
+    ["Von Neumann Architecture", "/articles/von-neumann.html", "why programs live in memory instead of in the wiring"],
+    ["Threat, Attack, Exploit", "/310/map/#node/threat-attack-vuln", "three words people mix up, sorted out"],
+    ["Karnaugh Map", "/articles/k-map.html", "a truth table redrawn as a grid so terms can be merged"],
+    ["Fetch-Execute Cycle", "/articles/fetch-execute.html", "fetch, decode, execute, repeat: what a CPU does all day"],
+    ["SLE and ALE", "/310/map/#node/cba-sle-ale", "putting a yearly dollar figure on a risk"],
+    ["De Morgan's Laws", "/115/map/#node/de-morgan", "how a NOT turns ANDs into ORs"],
+    ["Git", "/toolkit/git.html", "keep a history of every change to your work"],
+  ];
+  const leads = ["New here? Start with", "Curious? Try", "One to read:", "Next up:", "Worth a look:"];
+  const sayBox = document.getElementById("say"), sayTip = document.getElementById("say-tip");
+  const hour = new Date().getHours();
+  document.getElementById("say-hi").textContent = hour < 5 ? "Up late? Hi there!" : hour < 12 ? "Good morning!" : hour < 18 ? "Good afternoon!" : "Good evening!";
+  let entryAt = 0;
+  function nextEntry() {
+    entryAt = (entryAt + 1) % entries.length;
+    const [name, path, hook] = entries[entryAt], lead = leads[entryAt % leads.length];
+    const a = Object.assign(document.createElement("a"), { href: KB + path, textContent: name });
+    sayTip.replaceChildren(lead + " ", a, ", " + hook + ".");
+    sayBox.classList.remove("swap"); void sayBox.offsetWidth; sayBox.classList.add("swap");
+    document.dispatchEvent(new Event("say:next"));   // the avatar script answers with a new face
+  }
+  const EVERY = 8000;
+  let sayTimer = null, sayHeld = false;
+  const schedule = () => {
+    clearTimeout(sayTimer);
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    sayTimer = setTimeout(() => { if (!sayHeld && !document.hidden) nextEntry(); schedule(); }, EVERY);
+  };
+  const hold = (on) => { sayHeld = on; if (!on) schedule(); };
+  sayBox.addEventListener("pointerenter", () => hold(true));
+  sayBox.addEventListener("pointerleave", () => hold(false));
+  sayBox.addEventListener("focusin", () => hold(true));
+  sayBox.addEventListener("focusout", () => hold(false));
+  document.getElementById("bot").addEventListener("click", () => { nextEntry(); schedule(); });
+  schedule();
 </script>
 <script type="module">
   // The ram is an open-bot-avatar definition (MIT, github.com/dominikscholz/open-bot-avatar): one silhouette path plus eye
@@ -228,6 +289,8 @@
         big.update({ ...rest, ...faces[i] });
         settle(2600);
       };
+      big.update({ ...rest, mood: "happy" }); settle(2400);   // the greeting
+      document.addEventListener("say:next", pick);
       host.addEventListener("pointerenter", pick);
       host.addEventListener("pointerdown", pick);
       host.addEventListener("pointerleave", () => settle(900));
