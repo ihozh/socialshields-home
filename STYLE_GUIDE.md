@@ -95,6 +95,8 @@ small uppercase label directly above a heading.
   names are not shown as headings.
 - Breakpoint 820px: stack grids to one column, center text.
 - Phone first: no horizontal scroll, 44px minimum tap targets.
+- No rubber-band overscroll: the page stops at its top and bottom edges (`overscroll-behavior: none`, set by
+  `brand.css` on any page that uses `.ss`).
 
 ## 5. Icons
 

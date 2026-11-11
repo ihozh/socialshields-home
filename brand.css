@@ -42,6 +42,7 @@
 }
 
 /* Base elements */
+:root.ss, :root:has(.ss) { overscroll-behavior: none; }   /* no rubber-band past the page edges */
 .ss, .ss body, body.ss {
   margin: 0;
   background: var(--ss-bg);
