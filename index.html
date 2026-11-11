@@ -132,11 +132,11 @@
     .card { padding: 24px 24px 12px; }
     .contact-in { grid-template-columns: 1fr; text-align: center; justify-items: center; }
     .links { justify-content: center; }
-    .bar { padding: 8px 10px; gap: 6px; }
-    .bar .brand { height: 44px; min-width: 44px; justify-content: center; margin-right: 0; }
+    /* One row: the shield, then the three section names. The bar itself is the grid, so an open project list can span it. */
+    .bar { display: grid; grid-template-columns: 44px repeat(3, minmax(0, 1fr)); align-items: center; padding: 8px 10px; gap: 4px; }
+    .bar .brand { height: 44px; justify-content: center; margin-right: 0; }
     .bar .brand span { display: none; }
-    .groups { width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
-    .group { display: contents; }
+    .groups, .group { display: contents; }
     .group + .group { border-left: none; }
     .group-btn { order: 1; flex-direction: column; justify-content: center; gap: 3px; height: auto; padding: 6px 4px; font-size: 15px; color: var(--muted); cursor: pointer; }
     .group-btn img { width: 32px; height: 32px; }
@@ -147,6 +147,10 @@
     .bar li a img { width: 32px; height: 32px; }
     .bar li a span { font-size: 14px; }
     .bar:hover, .bar:focus-within, .bar:has(.group.open) { padding-bottom: 8px; }
+  }
+  @media (max-width: 360px) {
+    .bar { grid-template-columns: 36px repeat(3, minmax(0, 1fr)); gap: 2px; }
+    .group-btn { font-size: 13px; padding-inline: 2px; }
   }
   @media (prefers-reduced-motion: reduce) { .bar, .bar *, .links a, .rows a, .rows svg { transition: none !important; } .say.swap .say-tip { animation: none; } }
 </style>
