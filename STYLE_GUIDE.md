@@ -88,6 +88,11 @@ small uppercase label directly above a heading.
 - Content width 1040px (`--ss-measure`), 16px side gutters, safe-area aware.
 - Page background is `--ss-bg`; a hero or header band may use `--ss-hero-bg`. Sections separate with a 1px
   `--ss-line` rule.
+- Section cards (homepage): Research, Education and Products are three cards in a row. A card is barely
+  there: `--ss-card` on the page gray, a 1px `--ss-line` border, the 22px radius, 32px padding. Inside: the section
+  name as a green heading, then one line per project (16px, ink), each closed by a 1px rule and ending in a small
+  green arrow; the whole line is the link. No color fills, no icons, no carousel or timed rotation, and project
+  names are not shown as headings.
 - Breakpoint 820px: stack grids to one column, center text.
 - Phone first: no horizontal scroll, 44px minimum tap targets.
 
@@ -116,15 +121,16 @@ and eye color `--ss-fg` (#1b1b1b). Use the definition from `index.html` on socia
 optional; when used, keep it small (about 100px) near the footer or a contact block, and keep the static SVG fallback.
 
 On the homepage the sheep has a speech bubble with no heading: one sentence that opens with a greeting for the
-time of day and points to one Knowledge Base entry with a link. The entry changes every 8 seconds, pausing while the pointer or keyboard focus is on the bubble; a click on the sheep
-moves on at once. With `prefers-reduced-motion` there is no timer. The entries are a short
-list in `index.html`; add to it when the Knowledge Base grows.
+time of day and points to one thing to read: a Knowledge Base entry, or one of the three sections of the page. The entry changes every 8 seconds, pausing while the pointer or keyboard focus is on the bubble; a click on the sheep
+moves on at once. With `prefers-reduced-motion` there is no timer. The lines are a short
+list in `index.html`; add to it when the Knowledge Base or the project list grows.
 
 ## 7. Shared elements every subsite has
 
 1. **Home link** at the top-left: the shield icon plus "Social Shields" in Bricolage Grotesque, linking to
    `https://socialshields.org/`. Class `.ss-home` in `brand.css`.
 2. **Footer**: a green band with a gold rule on top, reading only `Farmingdale State College` (class `.ss-footer`).
+   On the homepage the Contact block sits inside the same green, so the gold rule moves up to the top of Contact.
    No personal names in the footer.
 3. **Contact** address `contact@socialshields.org` where a contact is needed.
 4. `<title>` is `<Project> · Social Shields`.

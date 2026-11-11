@@ -28,6 +28,7 @@
     color-scheme: light;
   }
   * { box-sizing: border-box; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
   body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
   a { color: inherit; text-decoration: none; }
   a:focus-visible, button:focus-visible { outline: 2px solid var(--green-hover); outline-offset: 2px; }
@@ -76,20 +77,40 @@
   @keyframes say-in { from { opacity: 0; transform: translateY(4px); } }
   .bot svg, .bot canvas { width: 100%; height: 100%; display: block; }
 
+  /* The three sections: three quiet cards in a row, one step off the page (white on the page gray, a hairline, the
+     same radius as the bar). Each holds the section name and a short list: one line per project, closed by a rule,
+     the whole line a link with a small arrow. Nothing rotates and nothing is filled with color; no icons and no
+     project names as headings. */
+  .cards { padding-block: 72px; }
+  .cards-in { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .card { padding: 32px 32px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 22px; scroll-margin-top: 104px; }
+  .card h2 { font-size: 1.875rem; line-height: 1.1; }
+  .rows { list-style: none; margin: 20px 0 0; padding: 0; }
+  .rows li { border-top: 1px solid var(--line); }
+  .rows a { display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 16px; align-items: center; min-height: 76px; padding-block: 14px; font-size: 16px; line-height: 1.5; color: var(--fg); transition: color .2s; }
+  .rows a:hover { color: var(--green); }
+  .rows svg { width: 20px; height: 20px; fill: none; stroke: var(--green); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s var(--ease); }
+  .rows a:hover svg { transform: translateX(4px); }
+  .rows a:focus-visible { outline-offset: 4px; border-radius: 6px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
   /* Contact */
-  .contact { border-top: 1px solid var(--line); padding-block: 48px 56px; }
+  /* Contact sits on the same dark green as the footer, so the page ends in one green block under a gold rule. */
+  .contact { background: var(--green); border-top: 4px solid var(--accent); color: #fff; padding-block: 56px 48px; }
+  .contact ::selection { background: #fff; color: var(--green); }
+  .contact a:focus-visible { outline-color: #fff; }
   .contact-in { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 28px; align-items: center; }
   .contact .bot { width: 104px; cursor: default; }
-  .contact h2 { font-size: 2rem; line-height: 1.1; }
-  .contact p { color: var(--muted); max-width: 56ch; margin-top: 8px; }
+  .contact h2 { font-size: 2rem; line-height: 1.1; color: #fff; }
+  .contact p { max-width: 56ch; margin-top: 8px; }
   .links { display: flex; gap: 10px 14px; flex-wrap: wrap; margin-top: 16px; }
   .links a, .links code { display: inline-flex; align-items: center; padding: 11px 18px; border-radius: 999px; font: 600 14px var(--body); }
-  .links a { background: var(--green); color: #fff; transition: transform .2s var(--ease), background .2s; }
-  .links a:hover { transform: translateY(-2px); background: var(--green-hover); }
+  .links a { background: #fff; color: var(--green); transition: transform .2s var(--ease), background .2s; }
+  .links a:hover { transform: translateY(-2px); background: var(--accent); color: var(--ink); }
   .links a:active { transform: none; }
-  .links code { background: var(--card); border: 1px solid var(--line); color: var(--ink); user-select: all; font: 500 13px var(--mono); }
-  /* Footer: a band in FSC green with a gold rule on top. */
-  footer { background: var(--green); border-top: 4px solid var(--accent); color: #fff; text-align: center; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; padding: 28px 16px calc(28px + env(safe-area-inset-bottom, 0px)); }
+  .links code { border: 1px solid rgb(255 255 255 / .45); color: #fff; user-select: all; font: 500 13px var(--mono); }
+  /* Footer: the last line of the green block, set off from Contact by a faint rule. */
+  footer { background: var(--green); border-top: 1px solid rgb(255 255 255 / .18); color: #fff; text-align: center; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; padding: 28px 16px calc(28px + env(safe-area-inset-bottom, 0px)); }
   footer::selection { background: #fff; color: var(--green); }
 
   /* Touch screens have no hover: tapping a section name opens the projects. */
@@ -105,6 +126,9 @@
     .stage { order: -1; }
     .bot { width: min(100%, 220px); }
     .say { text-align: center; }
+    .cards { padding-block: 40px; }
+    .cards-in { grid-template-columns: 1fr; gap: 16px; }
+    .card { padding: 24px 24px 12px; }
     .contact-in { grid-template-columns: 1fr; text-align: center; justify-items: center; }
     .links { justify-content: center; }
     .bar { padding: 8px 10px; gap: 6px; }
@@ -123,7 +147,7 @@
     .bar li a span { font-size: 14px; }
     .bar:hover, .bar:focus-within, .bar:has(.group.open) { padding-bottom: 8px; }
   }
-  @media (prefers-reduced-motion: reduce) { .bar, .bar *, .links a { transition: none !important; } .say.swap .say-tip { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .bar, .bar *, .links a, .rows a, .rows svg { transition: none !important; } .say.swap .say-tip { animation: none; } }
 </style>
 </head>
 <body>
@@ -178,6 +202,34 @@
     </div>
   </section>
 
+  <div class="cards">
+  <div class="wrap cards-in">
+    <section class="card" id="research" aria-labelledby="research-h">
+      <h2 id="research-h">Research</h2>
+      <ul class="rows">
+        <li><a href="https://mhdash.socialshields.org/"><span><span class="sr">MHDash: </span>AI research for suicide prevention, with a live dataset and a benchmark.</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5"/></svg></a></li>
+        <li><a href="https://siege.socialshields.org/explorer"><span><span class="sr">SIEGE: </span>A proof-of-work blockchain built for security classes.</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5"/></svg></a></li>
+      </ul>
+    </section>
+    <section class="card" id="education" aria-labelledby="education-h">
+      <h2 id="education-h">Education</h2>
+      <ul class="rows">
+        <li><a href="https://kb.socialshields.org/"><span><span class="sr">Knowledge Base: </span>Articles and knowledge maps for the courses we teach.</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5"/></svg></a></li>
+        <li><a href="https://labs.socialshields.org/"><span><span class="sr">Labs: </span>Hands-on labs and open playgrounds, from logic gates to cryptography.</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5"/></svg></a></li>
+        <li><a href="https://pyram.socialshields.org/"><span><span class="sr">PyRam: </span>Write, run and practice Python in your browser.</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5"/></svg></a></li>
+      </ul>
+    </section>
+    <section class="card" id="products" aria-labelledby="products-h">
+      <h2 id="products-h">Products</h2>
+      <ul class="rows">
+        <li><a href="https://hub.socialshields.org/docs"><span><span class="sr">News Hub: </span>A news crawler API with search and a live stream.</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5"/></svg></a></li>
+        <li><a href="https://news.socialshields.org/"><span><span class="sr">News: </span>A live, searchable feed of the news it collects.</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5"/></svg></a></li>
+        <li><a href="https://icons.socialshields.org/"><span><span class="sr">Icons: </span>Isometric animated SVG icons, by copy or by API.</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5"/></svg></a></li>
+      </ul>
+    </section>
+  </div>
+  </div>
+
   <section class="contact" id="contact">
     <div class="wrap contact-in">
       <div class="bot" id="bot-small" aria-hidden="true"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#ram"/></svg></div>
@@ -205,34 +257,38 @@
   });
 </script>
 <script>
-  // The sheep greets the visitor by time of day and, in the same bubble, suggests one Knowledge Base entry
-  // (kb.socialshields.org). The entry changes every few seconds; the timer waits while the pointer or keyboard focus is
+  // The sheep greets the visitor by time of day and, in the same bubble, points to one thing to read: a Knowledge
+  // Base entry (kb.socialshields.org) or one of the three sections further down this page. The line changes every few seconds; the timer waits while the pointer or keyboard focus is
   // on the bubble, so a link can be read and followed, and while the tab is hidden. Visitors who ask for reduced motion
   // get no timer.
   // A click on the sheep moves to the next entry at once.
   const KB = "https://kb.socialshields.org";
-  const entries = [
-    ["C.I.A. Triad", "/310/map/#node/cia-triad", "the three goals every security decision protects"],
-    ["Two's Complement", "/articles/twos-complement.html", "how a computer with no minus sign stores negative numbers"],
-    ["Malware", "/310/map/#node/malware-types", "the main kinds of malicious software and how they differ"],
-    ["Von Neumann Architecture", "/articles/von-neumann.html", "why programs live in memory instead of in the wiring"],
-    ["Threat, Attack, Exploit", "/310/map/#node/threat-attack-vuln", "three words people mix up, sorted out"],
-    ["Karnaugh Map", "/articles/k-map.html", "a truth table redrawn as a grid so terms can be merged"],
-    ["Fetch-Execute Cycle", "/articles/fetch-execute.html", "fetch, decode, execute, repeat: what a CPU does all day"],
-    ["SLE and ALE", "/310/map/#node/cba-sle-ale", "putting a yearly dollar figure on a risk"],
-    ["De Morgan's Laws", "/115/map/#node/de-morgan", "how a NOT turns ANDs into ORs"],
-    ["Git", "/toolkit/git.html", "keep a history of every change to your work"],
+  // Each line is [words before the link, link text, link target, words after]. Knowledge Base entries and the three
+  // sections of this page take turns.
+  const lines = [
+    ["New here? Start with", "C.I.A. Triad", KB + "/310/map/#node/cia-triad", ", the three goals every security decision protects."],
+    ["Curious? Try", "Two's Complement", KB + "/articles/twos-complement.html", ", how a computer with no minus sign stores negative numbers."],
+    ["Want to see our studies? Go to", "Research", "#research", ": AI for mental health and a blockchain built for class."],
+    ["One to read:", "Malware", KB + "/310/map/#node/malware-types", ", the main kinds of malicious software and how they differ."],
+    ["Next up:", "Von Neumann Architecture", KB + "/articles/von-neumann.html", ", why programs live in memory instead of in the wiring."],
+    ["Here to learn? Go to", "Education", "#education", ": a knowledge base, hands-on labs and Python in your browser."],
+    ["Worth a look:", "Threat, Attack, Exploit", KB + "/310/map/#node/threat-attack-vuln", ", three words people mix up, sorted out."],
+    ["One to read:", "Karnaugh Map", KB + "/articles/k-map.html", ", a truth table redrawn as a grid so terms can be merged."],
+    ["Need a tool? Go to", "Products", "#products", ": a news API, a live news feed and an icon library."],
+    ["Next up:", "Fetch-Execute Cycle", KB + "/articles/fetch-execute.html", ": fetch, decode, execute, repeat. What a CPU does all day."],
+    ["Curious? Try", "SLE and ALE", KB + "/310/map/#node/cba-sle-ale", ", putting a yearly dollar figure on a risk."],
+    ["Worth a look:", "De Morgan's Laws", KB + "/115/map/#node/de-morgan", ", how a NOT turns ANDs into ORs."],
+    ["One to read:", "Git", KB + "/toolkit/git.html", ", keep a history of every change to your work."],
   ];
-  const leads = ["New here? Start with", "Curious? Try", "One to read:", "Next up:", "Worth a look:"];
   const sayBox = document.getElementById("say"), sayTip = document.getElementById("say-tip");
   const hour = new Date().getHours();
   document.getElementById("say-hi").textContent = hour < 5 ? "Up late? Hi there!" : hour < 12 ? "Good morning!" : hour < 18 ? "Good afternoon!" : "Good evening!";
-  let entryAt = 0;
+  let lineAt = 0;
   function nextEntry() {
-    entryAt = (entryAt + 1) % entries.length;
-    const [name, path, hook] = entries[entryAt], lead = leads[entryAt % leads.length];
-    const a = Object.assign(document.createElement("a"), { href: KB + path, textContent: name });
-    sayTip.replaceChildren(lead + " ", a, ", " + hook + ".");
+    lineAt = (lineAt + 1) % lines.length;
+    const [before, name, href, after] = lines[lineAt];
+    const a = Object.assign(document.createElement("a"), { href, textContent: name });
+    sayTip.replaceChildren(before + " ", a, after);
     sayBox.classList.remove("swap"); void sayBox.offsetWidth; sayBox.classList.add("swap");
     document.dispatchEvent(new Event("say:next"));   // the avatar script answers with a new face
   }
