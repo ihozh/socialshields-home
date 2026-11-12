@@ -93,6 +93,12 @@
   .rows svg { width: 20px; height: 20px; fill: none; stroke: var(--green); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s var(--ease); }
   .rows a:hover svg { transform: translateX(4px); }
   .rows a:focus-visible { outline-offset: 4px; border-radius: 6px; }
+  /* A section with more than three projects shows three; this last line opens the rest. The script adds it. */
+  .more { display: grid; grid-template-columns: minmax(0, 1fr) 20px; gap: 16px; align-items: center; width: 100%; min-height: 52px; padding: 14px 0; border: 0; border-top: 1px solid var(--line); background: none; font: 600 16px/1.5 var(--body); color: var(--green); text-align: left; cursor: pointer; transition: color .2s; }
+  .more:hover { color: var(--green-hover); }
+  .more:focus-visible { outline-offset: 4px; border-radius: 6px; }
+  .more svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s var(--ease); }
+  .more[aria-expanded="true"] svg { transform: rotate(180deg); }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
   /* Contact */
@@ -152,7 +158,7 @@
     .bar { grid-template-columns: 36px repeat(3, minmax(0, 1fr)); gap: 2px; }
     .group-btn { font-size: 13px; padding-inline: 2px; }
   }
-  @media (prefers-reduced-motion: reduce) { .bar, .bar *, .links a, .rows a, .rows svg { transition: none !important; } .say.swap .say-tip { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .bar, .bar *, .links a, .rows a, .rows svg, .more, .more svg { transition: none !important; } .say.swap .say-tip { animation: none; } }
 </style>
 </head>
 <body>
@@ -263,6 +269,23 @@
       document.querySelectorAll(".group").forEach((g) => { g.classList.remove("open"); g.querySelector(".group-btn").setAttribute("aria-expanded", "false"); });
       group.classList.toggle("open", open); btn.setAttribute("aria-expanded", String(open));
     });
+  });
+  // A card lists at most three projects; a longer list gets a "More" line that opens and closes the rest.
+  // Without this script every project stays visible.
+  const SHOWN = 3;
+  document.querySelectorAll(".rows").forEach((list) => {
+    const extra = [...list.children].slice(SHOWN);
+    if (!extra.length) return;
+    const btn = Object.assign(document.createElement("button"), { type: "button", className: "more" });
+    btn.innerHTML = '<span></span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8l5 5 5-5"/></svg>';
+    const set = (open) => {
+      extra.forEach((li) => { li.hidden = !open; });
+      btn.setAttribute("aria-expanded", String(open));
+      btn.firstChild.textContent = open ? "Less" : "More";
+    };
+    btn.addEventListener("click", () => set(btn.getAttribute("aria-expanded") !== "true"));
+    set(false);
+    list.after(btn);
   });
 </script>
 <script>
