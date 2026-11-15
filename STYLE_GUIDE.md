@@ -113,7 +113,7 @@ style paints hidden faces with it. Do not use the filled styles: they turn into 
 Display at 30–36px in bars and 64–96px in feature tiles. Do not mix in other icon sets.
 
 Current assignments: shield (brand), microscope (Research), lightbulb (Lab), heart (MHDash), castle (SIEGE), chat-bubbles (Network),
-graduation-cap (Education), book-stack (KB), terminal (Pyram), package (Products), megaphone (News Hub), weather (Weather), documents (News),
+graduation-cap (Education), book-stack (KB), terminal (Pyram), cpu (Ram65), package (Products), megaphone (News Hub), weather (Weather), documents (News),
 paint-palette (Icons).
 
 ## 6. Mascot
