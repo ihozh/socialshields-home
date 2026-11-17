@@ -32,7 +32,7 @@
   html, body { overscroll-behavior: none; }
   body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
   a { color: inherit; text-decoration: none; }
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--green-hover); outline-offset: 2px; }
+  a:focus-visible, button:focus-visible, .bot:focus-visible { outline: 2px solid var(--green-hover); outline-offset: 2px; }
   ::selection { background: var(--accent); color: var(--ink); }
   h1, h2 { margin: 0; font-family: var(--head); font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; color: var(--green); }
   p { margin: 0; text-wrap: pretty; }
@@ -212,7 +212,7 @@
         <div class="say" id="say">
           <p class="say-tip" id="say-tip"><span id="say-hi">Hi there!</span> New here? Start with <a href="https://kb.socialshields.org/310/map/#node/cia-triad">C.I.A. Triad</a>, the three goals every security decision protects.</p>
         </div>
-        <div class="bot" id="bot" role="img" aria-label="Sheep mascot"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g id="ram"><path d="M34 44L66 44C74 44 78 52 78 62L78 68C78 80 66 88 50 88C34 88 22 80 22 68L22 62C22 52 26 44 34 44ZM18 44C12 38 16 28 24 30C24 20 36 16 40 22C42 12 56 12 58 22C64 14 76 18 74 28C84 26 88 38 80 42C84 48 76 54 72 48L28 48C24 54 14 50 18 44ZM24 50C14 48 8 56 10 64C12 70 20 70 26 64ZM76 50C86 48 92 56 90 64C88 70 80 70 74 64Z" fill="#ffba00"/><rect x="39.8" y="54" width="4.4" height="12" rx="2.2" fill="#1b1b1b"/><rect x="55.8" y="54" width="4.4" height="12" rx="2.2" fill="#1b1b1b"/></g></svg></div>
+        <div class="bot" id="bot" role="button" tabindex="0" aria-label="Chat with Ram"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g id="ram"><path d="M34 44L66 44C74 44 78 52 78 62L78 68C78 80 66 88 50 88C34 88 22 80 22 68L22 62C22 52 26 44 34 44ZM18 44C12 38 16 28 24 30C24 20 36 16 40 22C42 12 56 12 58 22C64 14 76 18 74 28C84 26 88 38 80 42C84 48 76 54 72 48L28 48C24 54 14 50 18 44ZM24 50C14 48 8 56 10 64C12 70 20 70 26 64ZM76 50C86 48 92 56 90 64C88 70 80 70 74 64Z" fill="#ffba00"/><rect x="39.8" y="54" width="4.4" height="12" rx="2.2" fill="#1b1b1b"/><rect x="55.8" y="54" width="4.4" height="12" rx="2.2" fill="#1b1b1b"/></g></svg></div>
       </div>
     </div>
   </section>
@@ -297,7 +297,8 @@
   // Base entry (kb.socialshields.org) or one of the three sections further down this page. The line changes every few seconds; the timer waits while the pointer or keyboard focus is
   // on the bubble, so a link can be read and followed, and while the tab is hidden. Visitors who ask for reduced motion
   // get no timer.
-  // A click on the sheep moves to the next entry at once.
+  // A click on the sheep opens the chat with Ram (ram.socialshields.org). The chat is loaded on the first click; if it
+  // cannot be loaded, the click moves to the next entry instead.
   const KB = "https://kb.socialshields.org";
   // Each line is [words before the link, link text, link target, words after]. Knowledge Base entries and the three
   // sections of this page take turns.
@@ -340,7 +341,14 @@
   sayBox.addEventListener("pointerleave", () => hold(false));
   sayBox.addEventListener("focusin", () => hold(true));
   sayBox.addEventListener("focusout", () => hold(false));
-  document.getElementById("bot").addEventListener("click", () => { nextEntry(); schedule(); });
+  const RAM_AT = /^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? "http://localhost:8791" : "https://ram.socialshields.org";
+  const botEl = document.getElementById("bot");
+  const openRam = async () => {
+    try { await import(RAM_AT + "/ram.js"); window.Ram.toggle(); }
+    catch { nextEntry(); schedule(); }
+  };
+  botEl.addEventListener("click", openRam);
+  botEl.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openRam(); } });
   schedule();
 </script>
 <script type="module">
@@ -358,7 +366,7 @@
       const host = document.getElementById("bot"), small = document.getElementById("bot-small");
       host.replaceChildren(); small.replaceChildren();
       const look = { definition: v.value, color: "#ffba00", eyeColor: "#1b1b1b", followPointer: true };
-      const big = mountAvatar(host, { ...look, label: "Sheep mascot" });
+      const big = mountAvatar(host, { ...look, label: "" });
       mountAvatar(small, { ...look, label: "" });
       // Any interaction picks a random expression. The engine has three moods; the rest come from combining a mood with a
       // fixed look direction and a head tilt. The sheep settles back to idle a moment after the pointer leaves.
