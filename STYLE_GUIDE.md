@@ -131,7 +131,8 @@ list in `index.html`; add to it when the Knowledge Base or the project list grow
 
 1. **Home link** at the top-left: the shield icon plus "Social Shields" in Bricolage Grotesque, linking to
    `https://socialshields.org/`. Class `.ss-home` in `brand.css`.
-2. **Footer**: a green band with a gold rule on top, reading only `Farmingdale State College` (class `.ss-footer`).
+2. **Footer**: a green band with a gold rule on top, reading only `Farmingdale State College-SUNY` (class `.ss-footer`).
+   On the homepage the white FSC and SUNY marks sit to the right of the Contact block (`logos/fsc.svg`, `logos/suny.png`).
    On the homepage the Contact block sits inside the same green, so the gold rule moves up to the top of Contact.
    No personal names in the footer.
 3. **Contact** address `contact@socialshields.org` where a contact is needed.

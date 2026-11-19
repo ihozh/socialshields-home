@@ -106,7 +106,12 @@
   .contact { background: var(--green); border-top: 4px solid var(--accent); color: #fff; padding-block: 56px 48px; }
   .contact ::selection { background: #fff; color: var(--green); }
   .contact a:focus-visible { outline-color: #fff; }
-  .contact-in { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 28px; align-items: center; }
+  .contact-in { display: grid; grid-template-columns: 104px minmax(0, 1fr) auto; gap: 28px; align-items: center; }
+  /* The college's mark and the SUNY mark sit to the right of Contact, one above the other; both are the white versions the two sites use in their own footers. */
+  .logos { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
+  .logos a { display: block; border-radius: 4px; transition: opacity .2s; }
+  .logos a:hover { opacity: .8; }
+  .logos img { display: block; height: 56px; width: auto; }
   .contact .bot { width: 104px; cursor: default; }
   .contact h2 { font-size: 2rem; line-height: 1.1; color: #fff; }
   .contact p { max-width: 56ch; margin-top: 8px; }
@@ -138,6 +143,7 @@
     .card { padding: 24px 24px 12px; }
     .contact-in { grid-template-columns: 1fr; text-align: center; justify-items: center; }
     .links { justify-content: center; }
+    .logos { flex-direction: row; align-items: center; gap: 28px; margin-top: 8px; }
     /* One row: the shield, then the three section names. The bar itself is the grid, so an open project list can span it. */
     .bar { display: grid; grid-template-columns: 44px repeat(3, minmax(0, 1fr)); align-items: center; padding: 8px 10px; gap: 4px; }
     .bar .brand { height: 44px; justify-content: center; margin-right: 0; }
@@ -206,7 +212,7 @@
       <div>
         <h1>Social Shields</h1>
         <p class="lede">An ecosystem for security research, education, and products. We build tools that give students hands-on resources and deliver practical solutions for public services.</p>
-        <p class="affil">Farmingdale State College</p>
+        <p class="affil">Farmingdale State College-SUNY</p>
       </div>
       <div class="stage">
         <div class="say" id="say">
@@ -254,16 +260,20 @@
       <div class="bot" id="bot-small" aria-hidden="true"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#ram"/></svg></div>
       <div>
         <h2>Contact</h2>
-        <p>Social Shields is run by Dr. Yihe Zhang at Farmingdale State College. For collaboration, education, or questions about any project, write to the address below or visit the personal homepage.</p>
+        <p>Social Shields is run by Dr. Yihe Zhang at Farmingdale State College-SUNY. For collaboration, education, or questions about any project, write to the address below or visit the personal homepage.</p>
         <div class="links">
           <a href="https://ihozh.github.io/" rel="me">Personal homepage</a>
           <code>contact@socialshields.org</code>
         </div>
       </div>
+      <div class="logos">
+        <a href="https://www.farmingdale.edu/"><img src="logos/fsc.svg" alt="Farmingdale State College" width="143" height="63"></a>
+        <a href="https://www.suny.edu/"><img src="logos/suny.png" alt="SUNY, The State University of New York" width="278" height="137"></a>
+      </div>
     </div>
   </section>
 </main>
-<footer>Farmingdale State College</footer>
+<footer>Farmingdale State College-SUNY</footer>
 
 <script>
   // Phones and touch screens: tapping a section name opens it; the phone layout shows one group at a time.
